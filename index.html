@@ -6,6 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, paper, scissors</title>
     
+
+</head>
+<body>
+    <div class="buttons">
+        <button class="btn" id="paperBtn">
+          Paper
+        </button>
+        <button class="btn" id="rockBtn">
+          Rock
+        </button>
+        <button class="btn" id="scissorsBtn">
+          Scissors
+        </button>
+    </div>
+
+    <div>
+        <h2 id="scoreInfo">Score</h2>
+        
+        <div>
+          <div>
+            <p id="playerScore">Player: 0</p>
+        </div>
+        
+        <div>
+            <p id="computerScore">Computer: 0</p>
+          </div>
+        </div>
+    </div>
+
     <script>
         function computerPlay() {
             const computerSelection = Math.floor(Math.random() * 3) + 1;
@@ -74,7 +103,7 @@
             };
 
         };
-
+/*
         function game() {
             let computerScore = 0, yourScore = 0;
 
@@ -107,12 +136,71 @@
             };
 
         }
+*/
+//        console.log(game());
 
-        console.log(game());
+        //Buttons
+        const paperBtn = document.getElementById('paperBtn')
+        const rockBtn = document.getElementById('rockBtn')
+        const scissorsBtn = document.getElementById('scissorsBtn')
+
+        //Score containers
+        const scoreInfo = document.getElementById('scoreInfo')
+        const playerScorePara = document.getElementById('playerScore')
+        const computerScorePara = document.getElementById('computerScore')
+
+        rockBtn.addEventListener('click', () => handleClick('ROCK'));
+        paperBtn.addEventListener('click', () => handleClick('PAPER'));
+        scissorsBtn.addEventListener('click', () => handleClick('SCISSORS'));
+
+        let playerScore = 0;
+        let computerScore = 0;
+        let gameOver = false;
+
+        function handleClick(playerSelection) {
+            let computerSelection = computerPlay();
+            let playResult = "";
+
+            if(gameOver === true){
+                restartGame();
+                gameOver = false;
+            }
+                
+            playResult = playRound(playerSelection, computerSelection);
+
+            if (playResult.includes("You Win!")) {
+                    playerScore++;
+                };
+
+                if (playResult.includes("You Lose!")) {
+                    computerScore++;
+            };
+
+            //console.log(playResult);
+            scoreInfo.textContent = playResult;
+            playerScorePara.textContent = `Player: ${playerScore}`
+            computerScorePara.textContent = `Computer: ${computerScore}`
+
+            if(playerScore === 5){
+                scoreInfo.textContent = "Game over: You've won!";
+                gameOver = true;
+            }
+
+            if(computerScore === 5){
+                scoreInfo.textContent = "Game over: Computer's won!";
+                gameOver = true;
+            }
+        };
+
+        function restartGame() {
+            playerScore = 0
+            computerScore = 0
+            scoreInfo.textContent = 'Score'
+            playerScorePara.textContent = 'Player: 0'
+            computerScorePara.textContent = 'Computer: 0'
+        }
 
     </script>
-</head>
-<body>
-    
+
 </body>
 </html>
